@@ -9,6 +9,7 @@
     "react-scripts": "1.1.5"
   },
   "scripts": {
+    "lint": "./node_modules/.bin/eslint src/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -28,5 +29,10 @@
   "bugs": {
     "url": "https://github.com/brunoferreiras/movies-visualizer/issues"
   },
-  "homepage": "https://github.com/brunoferreiras/movies-visualizer#readme"
+  "homepage": "https://github.com/brunoferreiras/movies-visualizer#readme",
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
 }
