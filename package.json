@@ -1,0 +1,32 @@
+{
+  "name": "movies-visualizer",
+  "version": "1.0.0",
+  "description": "A wrapper to work with the TheMovieDB API.",
+  "private": true,
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "1.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunoferreiras/movies-visualizer.git"
+  },
+  "keywords": [
+    "js",
+    "movies",
+    "library"
+  ],
+  "author": "Bruno Ferreira <fs.brunoferreira@gmail.com> (https://www.linkedin.com/in/brunoferreiras/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brunoferreiras/movies-visualizer/issues"
+  },
+  "homepage": "https://github.com/brunoferreiras/movies-visualizer#readme"
+}
