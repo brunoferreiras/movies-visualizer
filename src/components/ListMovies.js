@@ -1,8 +1,9 @@
 import React from 'react';
+import MovieCard from './MovieCard';
 
 const ListMovies = () => (
   <div>
-    <h1>List All Movies</h1>
+    <MovieCard />
   </div>
 );
 
