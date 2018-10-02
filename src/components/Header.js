@@ -68,6 +68,9 @@ const styles = theme => ({
       },
     },
   },
+  toobar: {
+    backgroundColor: '#97A7AA'
+  }
 });
 
 function Header(props) {
@@ -75,7 +78,7 @@ function Header(props) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.toobar}>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
             <MovieIcon />
           </IconButton>
