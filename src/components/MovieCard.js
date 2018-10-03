@@ -1,17 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
-import Rating from './Rating';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import StarsIcon from '@material-ui/icons/Stars';
-import { Button } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { URL_IMAGE } from '../utilities/constants';
+import Rating from './Rating';
 
 const styles = theme => ({
   root: {
@@ -25,7 +26,7 @@ const styles = theme => ({
     fontSize: 32
   },
   image: {
-    width: 150
+    width: 200
   },
   img: {
     margin: 'auto',
@@ -48,7 +49,6 @@ const styles = theme => ({
 function MovieCard(props) {
   const {
     classes,
-    id,
     voteCount,
     popularity,
     title,
@@ -57,7 +57,7 @@ function MovieCard(props) {
     image,
     releaseDate
   } = props;
-  const IMAGE_URL = 'https://image.tmdb.org/t/p/w200' + image;
+  const IMAGE_URL = image !== null ? URL_IMAGE + image : 'https://cdn3.iconfinder.com/data/icons/block/32/block-512.png';
   let formatedDate = Moment(releaseDate).format('DD/MM/YYYY');
 
   return (
@@ -80,7 +80,7 @@ function MovieCard(props) {
                 <Typography variant="body1" gutterBottom align="justify">
                   {description}
                 </Typography>
-                <Grid container direction="row" style={{ marginTop: 100 }}>
+                <Grid container direction="row" style={{ marginTop: 5 }}>
                   <Typography
                     variant="caption"
                     color="primary"
@@ -128,13 +128,12 @@ function MovieCard(props) {
 
 MovieCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired,
   voteCount: PropTypes.number.isRequired,
   popularity: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   releaseDate: PropTypes.string.isRequired
 };
 
