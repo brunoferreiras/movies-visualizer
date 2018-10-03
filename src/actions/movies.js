@@ -13,3 +13,10 @@ export const getMovieDetails = id => {
     payload: id
   };
 };
+
+export const searchMovie = (word) => {
+  return {
+    type: types.SEARCH_MOVIES,
+    payload: word
+  }
+};

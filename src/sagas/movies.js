@@ -26,9 +26,24 @@ function* movieDetails({ payload }) {
   }
 }
 
+function* searchMovie({ payload }) {
+  try {
+    const response = yield call(API.searchMovie, payload);
+    console.log('SAGA SEARCH:', payload);
+    console.log('response:', response);
+    yield put({
+      type: types.SET_POPULAR_MOVIES,
+      payload: response.data.results
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* MoviesSaga() {
   yield takeLatest(types.GET_POPULAR_MOVIES, popularMovies);
   yield takeLatest(types.GET_MOVIE_DETAILS, movieDetails);
+  yield takeLatest(types.SEARCH_MOVIES, searchMovie);
 }
 
 export default MoviesSaga;
