@@ -11,38 +11,27 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { URL_IMAGE } from '../utilities/constants';
+import { URL_IMAGE, URL_IMAGE_NOT_FOUND } from '../utilities/constants';
 import Rating from './Rating';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    margin: 'auto',
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3
+  },
+  paper: {
     padding: theme.spacing.unit * 2,
-    maxWidth: '70%'
-  },
-  icon: {
-    margin: theme.spacing.unit,
-    fontSize: 32
-  },
-  image: {
-    width: 200
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%'
-  },
-  title: {
-    color: '#9DB6BB'
-  },
-  favoriteButton: {
-    fontSize: 48,
-    margin: theme.spacing.unit * 5
+    textAlign: 'center',
+    color: theme.palette.text.secondary
   },
   type: {
-    margin: 'auto'
+    display: 'flex',
+    alignItems: 'center',
+    verticalAlign: 'middle'
+  },
+  marginIcon: {
+    marginRight: theme.spacing.unit * 2
   }
 });
 
@@ -57,36 +46,41 @@ function MovieCard(props) {
     image,
     releaseDate
   } = props;
-  const IMAGE_URL = image !== null ? URL_IMAGE + image : 'https://cdn3.iconfinder.com/data/icons/block/32/block-512.png';
+  const IMAGE_URL = image !== null ? URL_IMAGE + image : URL_IMAGE_NOT_FOUND;
   let formatedDate = Moment(releaseDate).format('DD/MM/YYYY');
 
   return (
-    <div style={{ padding: 20 }}>
-      <Paper className={classes.root}>
-        <Grid container spacing={16}>
-          <Grid item xs={3}>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={IMAGE_URL} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={9} sm container>
-            <Grid item xs container direction="column" spacing={16}>
-              <Grid item>
-                <Typography className={classes.title} variant="title">
-                  {title}
-                </Typography>
+    <div className={classes.root}>
+      <Grid container direction="row">
+        <Grid item xs>
+          <Paper className={classes.paper}>
+            <Grid container direction="row">
+              <Grid item xs>
+                <ButtonBase className={classes.image}>
+                  <img className={classes.img} alt="complex" src={IMAGE_URL} />
+                </ButtonBase>
               </Grid>
-              <Grid item>
-                <Typography variant="body1" gutterBottom align="justify">
-                  {description}
-                </Typography>
-                <Grid container direction="row" style={{ marginTop: 5 }}>
+              <Grid item xs>
+                <Grid item xs>
+                  <Typography className={classes.title} variant="title">
+                    {title}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="justify">
+                    {description}
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="flex-end"
+                >
                   <Typography
                     variant="caption"
                     color="primary"
                     className={classes.type}
                   >
-                    <CalendarIcon color="primary" />
+                    <CalendarIcon color="primary" className={classes.marginIcon} />
                     {formatedDate}
                   </Typography>
                   <Typography
@@ -94,7 +88,7 @@ function MovieCard(props) {
                     color="primary"
                     className={classes.type}
                   >
-                    <ThumbUpIcon color="primary" />
+                    <ThumbUpIcon color="primary" className={classes.marginIcon}/>
                     {voteCount}
                   </Typography>
                   <Typography
@@ -102,26 +96,31 @@ function MovieCard(props) {
                     color="primary"
                     className={classes.type}
                   >
-                    <StarsIcon color="primary" />
+                    <StarsIcon color="primary" className={classes.marginIcon}/>
                     {popularity}
                   </Typography>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item align="center">
-              <Rating rating={rating} />
-              <Button
-                variant="fab"
-                color="secondary"
-                aria-label="Add"
-                className={classes.favoriteButton}
+              <Grid
+                container
+                direction="row"
+                justify="space-around"
+                alignItems="flex-end"
               >
-                <FavoriteIcon />
-              </Button>
+                <Rating rating={rating} />
+                <Button
+                  variant="fab"
+                  color="secondary"
+                  aria-label="Add"
+                  className={classes.favoriteButton}
+                >
+                  <FavoriteIcon />
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </Paper>
         </Grid>
-      </Paper>
+      </Grid>
     </div>
   );
 }
