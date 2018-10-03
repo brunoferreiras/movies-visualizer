@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './Header';
-import ListMovies from './ListMovies';
+import ListMovies from '../containers/ListMovies';
 import MovieDetails from './MovieDetails';
 
 const Main = () => (
