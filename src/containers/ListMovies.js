@@ -65,6 +65,7 @@ class ListMovies extends Component {
     return movies.map((movie, i) => (
       <MovieCard
         key={i}
+        id={movie.id}
         voteCount={movie.vote_count}
         popularity={movie.popularity}
         title={movie.title}
