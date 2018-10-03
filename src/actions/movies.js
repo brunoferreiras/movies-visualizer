@@ -1,8 +1,9 @@
 import * as types from './types';
 
-export const getPopularMovies = () => {
+export const getPopularMovies = (page) => {
   return {
-    type: types.GET_POPULAR_MOVIES
+    type: types.GET_POPULAR_MOVIES,
+    payload: page
   }
 }
 

@@ -7,7 +7,7 @@ const initialState = {
 const MoviesReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_POPULAR_MOVIES:
-      return { ...state, movies: action.payload };
+      return { ...state, movies: state.movies.concat(action.payload) };
     default:
     return state;
   }

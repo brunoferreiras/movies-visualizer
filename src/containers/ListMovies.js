@@ -4,12 +4,64 @@ import { getPopularMovies } from '../actions/movies';
 import MovieCard from '../components/MovieCard';
 
 class ListMovies extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pagination: 1,
+      page: 1,
+      numberPartial: 5
+    };
+
+    this.handleScroll = this.handleScroll.bind(this);
+    this.requestAgain = this.requestAgain.bind(this);
+  }
+
   componentDidMount() {
-    this.props.getPopularMovies();
+    window.addEventListener('scroll', this.handleScroll);
+    this.props.getPopularMovies(this.state.pagination);
+  }
+
+  incrementPage() {
+    this.setState({ page: this.state.page + 1 });
+  }
+
+  getParcialMovies(movies) {
+    return [...movies.slice(0, this.state.page * this.state.numberPartial)];
+  }
+
+  requestAgain()
+  {
+    if (this.state.page * this.state.numberPartial === this.props.movies.length) {
+      this.setState({ pagination: this.state.pagination + 1}, () => this.props.getPopularMovies(this.state.pagination));
+    }
+  }
+
+  handleScroll() {
+    const windowHeight =
+      'innerHeight' in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    const windowBottom = windowHeight + window.pageYOffset;
+    const docHeightWithMargem = docHeight - docHeight * 0.1;
+    if (windowBottom >= docHeightWithMargem) {
+      this.incrementPage();
+      this.requestAgain();
+    }
   }
 
   renderCards() {
     let { movies } = this.props;
+    movies = this.getParcialMovies(movies);
+
     return movies.map((movie, i) => (
       <MovieCard
         key={i}
@@ -37,7 +89,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPopularMovies: () => dispatch(getPopularMovies())
+    getPopularMovies: page => dispatch(getPopularMovies(page))
   };
 };
 
