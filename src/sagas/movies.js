@@ -29,10 +29,8 @@ function* movieDetails({ payload }) {
 function* searchMovie({ payload }) {
   try {
     const response = yield call(API.searchMovie, payload);
-    console.log('SAGA SEARCH:', payload);
-    console.log('response:', response);
     yield put({
-      type: types.SET_POPULAR_MOVIES,
+      type: types.SET_SEARCH_MOVIES,
       payload: response.data.results
     });
   } catch (error) {

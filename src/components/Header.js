@@ -11,6 +11,8 @@ import MovieIcon from '@material-ui/icons/Movie';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { searchMovie } from '../actions/movies';
 
 const styles = theme => ({
   root: {
@@ -112,7 +114,15 @@ class Header extends Component {
               </div>
               <Input
                 value={this.state.movie}
-                onChange={event => this.setState({ movie: event.target.value })}
+                onChange={event =>
+                  this.setState(
+                    { movie: event.target.value },
+                    () =>
+                      this.state.movie !== ''
+                        ? this.props.searchMovie(this.state.movie)
+                        : null
+                  )
+                }
                 placeholder="Pesquisar..."
                 disableUnderline
                 classes={{
@@ -140,4 +150,13 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Header);
+const mapDispatchToProps = dispatch => {
+  return {
+    searchMovie: movie => dispatch(searchMovie(movie))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(Header));
