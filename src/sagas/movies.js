@@ -1,9 +1,11 @@
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { delay} from 'redux-saga';
 import * as types from '../actions/types';
 import * as API from '../api';
-import { call, put, takeLatest } from 'redux-saga/effects';
 
 function* popularMovies({ payload }) {
   try {
+    yield call(delay, 500);
     const response = yield call(API.getPopularMovies, payload);
     yield put({
       type: types.SET_POPULAR_MOVIES,
@@ -16,6 +18,7 @@ function* popularMovies({ payload }) {
 
 function* movieDetails({ payload }) {
   try {
+    yield call(delay, 500);
     const response = yield call(API.getMovieDetails, payload);
     yield put({
       type: types.SET_MOVIE_DETAILS,
@@ -28,6 +31,7 @@ function* movieDetails({ payload }) {
 
 function* searchMovie({ payload }) {
   try {
+    yield call(delay, 500);
     const response = yield call(API.searchMovie, payload);
     yield put({
       type: types.SET_SEARCH_MOVIES,
