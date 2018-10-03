@@ -10,7 +10,8 @@ import StarsIcon from '@material-ui/icons/Stars';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { URL_IMAGE, URL_IMAGE_NOT_FOUND } from '../utilities/constants';
 import Rating from './Rating';
 
@@ -35,39 +36,90 @@ const styles = theme => ({
   }
 });
 
-function MovieCard(props) {
-  const {
-    classes,
-    voteCount,
-    popularity,
-    title,
-    description,
-    rating,
-    image,
-    releaseDate
-  } = props;
-  const IMAGE_URL = image !== null ? URL_IMAGE + image : URL_IMAGE_NOT_FOUND;
-  let formatedDate = Moment(releaseDate).format('DD/MM/YYYY');
-
-  return (
-    <div className={classes.root}>
-      <Grid container direction="row">
-        <Grid item xs>
-          <Paper className={classes.paper}>
-            <Grid container direction="row">
-              <Grid item xs>
-                <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt="complex" src={IMAGE_URL} />
-                </ButtonBase>
-              </Grid>
-              <Grid item xs>
+class MovieCard extends Component {
+  render() {
+    const {
+      classes,
+      id,
+      voteCount,
+      popularity,
+      title,
+      description,
+      rating,
+      image,
+      releaseDate
+    } = this.props;
+    const IMAGE_URL = image !== null ? URL_IMAGE + image : URL_IMAGE_NOT_FOUND;
+    let formatedDate = Moment(releaseDate).format('DD/MM/YYYY');
+    const movieDetailsLink = '/movie/' + id;
+    return (
+      <div className={classes.root}>
+        <Grid container direction="row">
+          <Grid item xs>
+            <Paper className={classes.paper}>
+              <Grid container direction="row">
                 <Grid item xs>
-                  <Typography className={classes.title} variant="title">
-                    {title}
-                  </Typography>
-                  <Typography variant="body1" gutterBottom align="justify">
-                    {description}
-                  </Typography>
+                  <ButtonBase
+                    className={classes.image}
+                    component={Link}
+                    to={movieDetailsLink}
+                  >
+                    <img
+                      className={classes.img}
+                      alt="Image of Movie"
+                      src={IMAGE_URL}
+                    />
+                  </ButtonBase>
+                </Grid>
+                <Grid item xs>
+                  <Grid item xs>
+                    <Typography className={classes.title} variant="title">
+                      {title}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom align="justify">
+                      {description}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="flex-end"
+                  >
+                    <Typography
+                      variant="caption"
+                      color="primary"
+                      className={classes.type}
+                    >
+                      <CalendarIcon
+                        color="primary"
+                        className={classes.marginIcon}
+                      />
+                      {formatedDate}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="primary"
+                      className={classes.type}
+                    >
+                      <ThumbUpIcon
+                        color="primary"
+                        className={classes.marginIcon}
+                      />
+                      {voteCount}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="primary"
+                      className={classes.type}
+                    >
+                      <StarsIcon
+                        color="primary"
+                        className={classes.marginIcon}
+                      />
+                      {popularity}
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid
                   container
@@ -75,58 +127,28 @@ function MovieCard(props) {
                   justify="space-around"
                   alignItems="flex-end"
                 >
-                  <Typography
-                    variant="caption"
-                    color="primary"
-                    className={classes.type}
+                  <Rating rating={rating} />
+                  <Button
+                    variant="fab"
+                    color="secondary"
+                    aria-label="Add"
+                    className={classes.favoriteButton}
                   >
-                    <CalendarIcon color="primary" className={classes.marginIcon} />
-                    {formatedDate}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="primary"
-                    className={classes.type}
-                  >
-                    <ThumbUpIcon color="primary" className={classes.marginIcon}/>
-                    {voteCount}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="primary"
-                    className={classes.type}
-                  >
-                    <StarsIcon color="primary" className={classes.marginIcon}/>
-                    {popularity}
-                  </Typography>
+                    <FavoriteIcon />
+                  </Button>
                 </Grid>
               </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-around"
-                alignItems="flex-end"
-              >
-                <Rating rating={rating} />
-                <Button
-                  variant="fab"
-                  color="secondary"
-                  aria-label="Add"
-                  className={classes.favoriteButton}
-                >
-                  <FavoriteIcon />
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 MovieCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
   voteCount: PropTypes.number.isRequired,
   popularity: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
