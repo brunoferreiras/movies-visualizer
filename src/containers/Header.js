@@ -1,4 +1,3 @@
-import { Icon } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
@@ -12,9 +11,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setError } from '../actions/general';
 import { searchMovie } from '../actions/movies';
-import Alert from './Alert';
+import Alert from '../components/Alert';
 
 const styles = theme => ({
   root: {
@@ -84,7 +84,8 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      movie: ''
+      movie: '',
+      redirect: false
     };
   }
 
@@ -97,20 +98,32 @@ class Header extends Component {
     }
   }
 
+  redirect() {
+    if (this.props.location.pathname !== '/' && this.state.movie !== '') {
+      this.setState({ redirect: true }, () => this.props.history.push('/'));
+    } else if(this.state.redirect && this.props.location.pathname === '/' && this.state.movie === '') {
+      this.props.history.goBack();
+    }
+  }
+
   render() {
-    const { classes, error } = this.props;
+    const { classes } = this.props;
+
     return (
       <div className={classes.root}>
+        {this.redirect()}
         {this.renderError()}
         <AppBar position="static">
           <Toolbar className={classes.toobar}>
-            <Icon
+            <IconButton
               className={classes.menuButton}
               color="inherit"
-              aria-label="Open drawer"
+              aria-label="Initial page"
+              component={Link}
+              to={'/'}
             >
               <MovieIcon />
-            </Icon>
+            </IconButton>
             <Typography
               className={classes.title}
               variant="title"

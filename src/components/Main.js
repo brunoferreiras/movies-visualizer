@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Header from './Header';
+import Header from '../containers/Header';
 import ListMovies from '../containers/ListMovies';
 import MovieDetails from '../containers/MovieDetails';
 
