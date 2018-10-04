@@ -12,7 +12,8 @@ function* popularMovies({ payload }) {
       payload: response.data.results
     });
   } catch (error) {
-    console.log(error);
+    console.log('saga:', error);
+    yield put({ type: types.SET_ERROR, payload: error.message });
   }
 }
 
@@ -25,7 +26,7 @@ function* movieDetails({ payload }) {
       payload: response.data
     });
   } catch (error) {
-    console.log(error);
+    yield put({ type: types.SET_ERROR, payload: error.message });
   }
 }
 
@@ -38,7 +39,7 @@ function* searchMovie({ payload }) {
       payload: response.data.results
     });
   } catch (error) {
-    console.log(error);
+    yield put({ type: types.SET_ERROR, payload: error.message });
   }
 }
 

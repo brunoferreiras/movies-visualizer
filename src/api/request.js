@@ -29,7 +29,7 @@ request.interceptors.response.use(
     console.log('RESPONSE ERROR AXIOS: ', error);
     if (error.response) {
       // Quando a requisição é feita e o servidor responde com um status diferente de 200.
-      return Promise.reject(new Error(error.response.data.error));
+      return Promise.reject(new Error(error.response.data.status_message));
     } else if (error.request) {
       // Quando a requisição é feita, porém não é recebido nenhuma resposta.
       return Promise.reject(

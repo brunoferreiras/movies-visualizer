@@ -12,7 +12,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setError } from '../actions/general';
 import { searchMovie } from '../actions/movies';
+import Alert from './Alert';
 
 const styles = theme => ({
   root: {
@@ -86,10 +88,20 @@ class Header extends Component {
     };
   }
 
+  renderError() {
+    const { error } = this.props;
+    if (error != null) {
+      return (
+        <Alert variant="error" message={error} close={this.props.clearError} />
+      );
+    }
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
     return (
       <div className={classes.root}>
+        {this.renderError()}
         <AppBar position="static">
           <Toolbar className={classes.toobar}>
             <Icon
@@ -150,13 +162,20 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => {
+  return {
+    error: state.general.error
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    searchMovie: movie => dispatch(searchMovie(movie))
+    searchMovie: movie => dispatch(searchMovie(movie)),
+    clearError: () => dispatch(setError())
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(Header));

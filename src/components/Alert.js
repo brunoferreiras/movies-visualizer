@@ -20,7 +20,7 @@ class Alert extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ open: false }, () => this.props.close());
   };
 
   render() {
@@ -51,7 +51,8 @@ class Alert extends React.Component {
 Alert.propTypes = {
   classes: PropTypes.object.isRequired,
   variant: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Alert);
