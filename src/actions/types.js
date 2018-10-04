@@ -8,3 +8,4 @@ export const SET_ERROR = 'SET_ERROR';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 export const LIST_FAVORITES = 'LIST_FAVORITES';
+export const SET_FAVORITES = 'SET_FAVORITES';

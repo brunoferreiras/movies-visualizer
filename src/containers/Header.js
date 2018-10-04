@@ -99,11 +99,11 @@ class Header extends Component {
   }
 
   redirect() {
-    if (this.props.location.pathname !== '/' && this.state.movie !== '') {
-      this.setState({ redirect: true }, () => this.props.history.push('/'));
-    } else if(this.state.redirect && this.props.location.pathname === '/' && this.state.movie === '') {
-      this.props.history.goBack();
-    }
+    // if (this.props.location.pathname !== '/' && this.state.movie !== '') {
+    //   this.setState({ redirect: true }, () => this.props.history.push('/'));
+    // } else if(this.state.redirect && this.props.location.pathname === '/' && this.state.movie === '') {
+    //   this.props.history.goBack();
+    // }
   }
 
   render() {

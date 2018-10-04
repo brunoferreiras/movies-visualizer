@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as types from '../actions/types';
-import { saveMovie, removeMovie, getAllFavorites } from '../api/firebase';
+import Firebase, { saveMovie, removeMovie, getAllFavorites } from '../api/firebase';
+import { API_KEY } from '../utilities/constants';
 
 function* addFavorite({ payload }) {
   try {
@@ -29,10 +30,31 @@ function* removeFavorite({ payload }) {
   }
 }
 
-function* listFavorites({ payload }) {
+function* listFavorites() {
   try {
-    const response = yield call(getAllFavorites, payload);
-    console.log('LIST FAVORITES', response);
+    var moviesRef = Firebase.database().ref(`${API_KEY}`)
+    var movies = yield call(function() {
+      return new Promise(function(resolve, reject) {
+        moviesRef.once('value', function (snap) {
+          var movies = []
+          var movieskeys = snap.val()
+          for (var movieskey in movieskeys) {
+            Firebase.database().ref(`${API_KEY}/${movieskey}`).once('value', function (item) {
+              movies.push(item.val())
+            })
+          }
+          resolve(movies)
+        })
+      })
+    })
+    console.log(movies)
+    // yield put({type: 'LOAD_ROOMS', payload: { rooms: rooms}})
+
+    // const snapshot = yield call(getAllFavorites);
+    // console.log('snapshot', snapshot);
+    // if (snapshot.val() === true) {
+    //   console.log('LIST FAVORITES', snapshot.val());
+    // }
     // yield put({
     //   type: types.SET_SEARCH_MOVIES,
     //   payload: response.data.results
