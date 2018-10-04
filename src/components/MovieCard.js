@@ -133,6 +133,7 @@ class MovieCard extends Component {
                     color="secondary"
                     aria-label="Add"
                     className={classes.favoriteButton}
+                    onClick={() => this.props.addFavorite()}
                   >
                     <FavoriteIcon />
                   </Button>

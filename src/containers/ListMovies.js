@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addFavorite, removeFavorite } from '../actions/favorites';
 import { getPopularMovies } from '../actions/movies';
 import MovieCard from '../components/MovieCard';
 
@@ -29,10 +30,14 @@ class ListMovies extends Component {
     return [...movies.slice(0, this.state.page * this.state.numberPartial)];
   }
 
-  requestAgain()
-  {
-    if (this.state.page * this.state.numberPartial === this.props.movies.length) {
-      this.setState({ pagination: this.state.pagination + 1}, () => this.props.getPopularMovies(this.state.pagination));
+  requestAgain() {
+    if (
+      this.state.page * this.state.numberPartial ===
+      this.props.movies.length
+    ) {
+      this.setState({ pagination: this.state.pagination + 1 }, () =>
+        this.props.getPopularMovies(this.state.pagination)
+      );
     }
   }
 
@@ -73,6 +78,8 @@ class ListMovies extends Component {
         rating={movie.vote_average}
         image={movie.backdrop_path}
         releaseDate={movie.release_date}
+        addFavorite={() => this.props.addFavorite(movie)}
+        removeFavorite={() => this.props.removeFavorite(movie.id)}
       />
     ));
   }
@@ -90,7 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPopularMovies: page => dispatch(getPopularMovies(page))
+    getPopularMovies: page => dispatch(getPopularMovies(page)),
+    addFavorite: movie => dispatch(addFavorite(movie)),
+    removeFavorite: id => dispatch(removeFavorite(id))
   };
 };
 
