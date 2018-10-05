@@ -25,10 +25,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brunoferreiras/movies-visualizer.git"
-  },
   "keywords": [
     "js",
     "movies",
@@ -36,10 +32,6 @@
   ],
   "author": "Bruno Ferreira <fs.brunoferreira@gmail.com> (https://www.linkedin.com/in/brunoferreiras/)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/brunoferreiras/movies-visualizer/issues"
-  },
-  "homepage": "https://github.com/brunoferreiras/movies-visualizer#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
