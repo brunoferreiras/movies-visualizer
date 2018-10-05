@@ -169,6 +169,8 @@ class Header extends Component {
               color="inherit"
               aria-label="Show Favorites"
               className={classes.menuButton}
+              component={Link}
+              to={'/favorites'}
             >
               <FavoriteIcon />
             </IconButton>
