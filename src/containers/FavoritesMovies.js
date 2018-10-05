@@ -62,6 +62,7 @@ class FavoritesMovies extends Component {
         rating={movie.vote_average}
         image={movie.backdrop_path}
         releaseDate={movie.release_date}
+        favoriteColor={'secondary'}
         action={() => this.props.removeFavorite(movie.id)}
       />
     ));

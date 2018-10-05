@@ -47,7 +47,8 @@ class MovieCard extends Component {
       description,
       rating,
       image,
-      releaseDate
+      releaseDate,
+      favoriteColor
     } = this.props;
     const IMAGE_URL = image !== null ? URL_IMAGE + image : URL_IMAGE_NOT_FOUND;
     let formatedDate = Moment(releaseDate).format('DD/MM/YYYY');
@@ -130,7 +131,7 @@ class MovieCard extends Component {
                   <Rating rating={rating} />
                   <Button
                     variant="fab"
-                    color="secondary"
+                    color={favoriteColor}
                     aria-label="Add"
                     className={classes.favoriteButton}
                     onClick={() => this.props.action()}
@@ -157,7 +158,8 @@ MovieCard.propTypes = {
   rating: PropTypes.number.isRequired,
   image: PropTypes.string,
   releaseDate: PropTypes.string.isRequired,
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
+  favoriteColor: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(MovieCard);
