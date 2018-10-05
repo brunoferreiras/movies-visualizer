@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as types from '../actions/types';
-import Firebase, { saveMovie, removeMovie, getAllFavorites } from '../api/firebase';
-import { API_KEY } from '../utilities/constants';
+import { getAllFavorites, removeMovie, saveMovie } from '../api/firebase';
 
 function* addFavorite({ payload }) {
   try {

@@ -1,11 +1,9 @@
-import { Button, List, ListItem } from '@material-ui/core';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import StarsIcon from '@material-ui/icons/Stars';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Moment from 'moment';
@@ -36,9 +34,9 @@ const styles = theme => ({
   flexContainer: {
     display: 'inline-flex',
     flexDirection: 'column',
-    padding: 0,
+    padding: 0
   },
-  img: {
+  picture: {
     maxWidth: 200
   }
 });
@@ -46,7 +44,10 @@ const styles = theme => ({
 class MovieDetailsCard extends Component {
   render() {
     const { classes, movie } = this.props;
-    const IMAGE_URL = movie.backdrop_path !== null ? URL_IMAGE + movie.backdrop_path : URL_IMAGE_NOT_FOUND;
+    const IMAGE_URL =
+      movie.backdrop_path !== null
+        ? URL_IMAGE + movie.backdrop_path
+        : URL_IMAGE_NOT_FOUND;
     let formatedDate = Moment(movie.releaseDate).format('DD/MM/YYYY');
     return (
       <div className={classes.root}>
@@ -57,8 +58,8 @@ class MovieDetailsCard extends Component {
                 <Grid item xs>
                   <ButtonBase className={classes.image}>
                     <img
-                      className={classes.img}
-                      alt="Image of Movie"
+                      className={classes.picture}
+                      alt="Poster"
                       src={IMAGE_URL}
                     />
                   </ButtonBase>
@@ -123,7 +124,7 @@ class MovieDetailsCard extends Component {
                   alignItems="flex-end"
                 >
                   <Rating rating={movie.vote_average} />
-                  <div></div>
+                  <div />
                 </Grid>
               </Grid>
             </Paper>

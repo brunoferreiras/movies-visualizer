@@ -19,7 +19,7 @@ class MovieDetails extends Component {
     const { movieDetails } = this.props;
     return (
       <div>
-        {movieDetails.length > 0 || Object.keys(movieDetails).length > 0 && <MovieDetailsCard movie={movieDetails} />}
+        {(movieDetails.length > 0 || Object.keys(movieDetails).length > 0) && <MovieDetailsCard movie={movieDetails} />}
       </div>
     );
   }
