@@ -33,6 +33,9 @@ const styles = theme => ({
   },
   marginIcon: {
     marginRight: theme.spacing.unit * 2
+  },
+  picture: {
+    maxWidth: 200
   }
 });
 
@@ -66,8 +69,8 @@ class MovieCard extends Component {
                     to={movieDetailsLink}
                   >
                     <img
-                      className={classes.img}
-                      alt="Image of Movie"
+                      className={classes.picture}
+                      alt="Poster Movie"
                       src={IMAGE_URL}
                     />
                   </ButtonBase>
