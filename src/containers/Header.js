@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setError } from '../actions/general';
+import { setError, setSuccess } from '../actions/general';
 import { searchMovie } from '../actions/movies';
 import Alert from '../components/Alert';
 
@@ -98,13 +98,20 @@ class Header extends Component {
     }
   }
 
-  redirect() {
-    if (this.props.location.pathname !== '/' && this.state.movie !== '') {
-      this.setState({ redirect: true }, () => this.props.history.push('/'));
-    } else if(this.state.redirect && this.props.location.pathname === '/' && this.state.movie === '') {
-      this.props.history.goBack();
+  renderSuccess() {
+    const { success } = this.props;
+    if (success != null) {
+      return (
+        <Alert
+          variant="success"
+          message={success}
+          close={this.props.clearSuccess}
+        />
+      );
     }
   }
+
+  redirect() {}
 
   render() {
     const { classes } = this.props;
@@ -113,6 +120,7 @@ class Header extends Component {
       <div className={classes.root}>
         {this.redirect()}
         {this.renderError()}
+        {this.renderSuccess()}
         <AppBar position="static">
           <Toolbar className={classes.toobar}>
             <IconButton
@@ -177,14 +185,16 @@ Header.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    error: state.general.error
+    error: state.general.error,
+    success: state.general.success
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     searchMovie: movie => dispatch(searchMovie(movie)),
-    clearError: () => dispatch(setError())
+    clearError: () => dispatch(setError()),
+    clearSuccess: () => dispatch(setSuccess())
   };
 };
 

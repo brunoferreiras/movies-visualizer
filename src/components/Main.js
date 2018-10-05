@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Header from '../containers/Header';
 import ListMovies from '../containers/ListMovies';
 import MovieDetails from '../containers/MovieDetails';
+import FavoritesMovies from '../containers/FavoritesMovies';
 
 const Main = () => (
   <main>
@@ -10,6 +11,7 @@ const Main = () => (
     <Switch>
       <Route exact path="/" component={ListMovies} />
       <Route path="/movie/:id" component={MovieDetails} />
+      <Route excat path="/favorites" component={FavoritesMovies} />>
     </Switch>
   </main>
 );

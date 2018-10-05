@@ -1,36 +1,53 @@
 import firebase from 'firebase';
+import * as types from '../actions/types';
 import { API_KEY } from '../utilities/constants';
 
 var config = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: ""
+  apiKey: "AIzaSyBA5rC6MUqEPcrBlJbWdvaQeiym3LVuoTg",
+  authDomain: "movies-visualizer.firebaseapp.com",
+  databaseURL: "https://movies-visualizer.firebaseio.com",
+  projectId: "movies-visualizer",
+  storageBucket: "movies-visualizer.appspot.com",
+  messagingSenderId: "958264710831"
 };
 
 const Firebase = firebase.initializeApp(config);
 const database = Firebase.database();
 
-export const saveMovie = (movie) => {
+export const saveMovie = ({ movie, dispatch }) => {
   const database = Firebase.database();
-  database.ref('/' + API_KEY).child(this.state.id).set(movie, () => console.log('Save Movie!'));
-}
+  return database
+    .ref('/' + API_KEY)
+    .child(movie.id)
+    .set(movie, () =>
+      dispatch({
+        type: types.SET_SUCCESS,
+        payload: movie.title + ' foi adicionado como favorito.'
+      })
+    );
+};
 
-export const readMovie = (id) => {
-  const database = Firebase.database();
-  var movie = database.ref(`/${API_KEY}/${id}`);
-  return movie.on('value', function(snapshot) {
-    console.log('read: ', snapshot.val());
-    return snapshot.val();
+export const getAllFavorites = dispatch => {
+    const movies = database.ref(`/${API_KEY}`);
+  movies.on('value', snapshot => {
+    dispatch({
+      type: types.SET_FAVORITES,
+      payload: snapshot.val() === null ? [] : Object.values(snapshot.val())
+    });
   });
-}
+};
 
-export const removeMovie = (id) => {
+export const removeMovie = ({ id, dispatch}) => {
   if (id != null) {
-    database.ref('/' + API_KEY).child(id).set(null, () => console.log('Remove Movie'));
+    return database
+      .ref('/' + API_KEY)
+      .child(id)
+      .set(null, () => dispatch({
+        type: types.SET_SUCCESS,
+        payload: 'O filme foi removido dos favoritos!'
+      }));
   }
-}
+  return false;
+};
 
 export default Firebase;

@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addFavorite, removeFavorite, listFavorites } from '../actions/favorites';
-import { getPopularMovies } from '../actions/movies';
+import { listFavorites, removeFavorite } from '../actions/favorites';
 import MovieCard from '../components/MovieCard';
 
-class ListMovies extends Component {
+class FavoritesMovies extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pagination: 1,
       page: 1,
       numberPartial: 5
     };
 
     this.handleScroll = this.handleScroll.bind(this);
-    this.requestAgain = this.requestAgain.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.props.getPopularMovies(this.state.pagination);
     this.props.listFavorites();
   }
 
@@ -29,17 +25,6 @@ class ListMovies extends Component {
 
   getParcialMovies(movies) {
     return [...movies.slice(0, this.state.page * this.state.numberPartial)];
-  }
-
-  requestAgain() {
-    if (
-      this.state.page * this.state.numberPartial ===
-      this.props.movies.length
-    ) {
-      this.setState({ pagination: this.state.pagination + 1 }, () =>
-        this.props.getPopularMovies(this.state.pagination)
-      );
-    }
   }
 
   handleScroll() {
@@ -60,12 +45,10 @@ class ListMovies extends Component {
     const docHeightWithMargem = docHeight - docHeight * 0.1;
     if (windowBottom >= docHeightWithMargem) {
       this.incrementPage();
-      this.requestAgain();
     }
   }
 
-  renderCards() {
-    let { movies, favorites } = this.props;
+  renderCards(movies) {
     movies = this.getParcialMovies(movies);
 
     return movies.map((movie, i) => (
@@ -79,29 +62,29 @@ class ListMovies extends Component {
         rating={movie.vote_average}
         image={movie.backdrop_path}
         releaseDate={movie.release_date}
-        favoriteColor={favorites.filter((value) => value.id === movie.id).length > 0 ? 'secondary' : 'primary'}
-        action={() => favorites.filter((value) => value.id === movie.id).length > 0 ? this.props.removeFavorite(movie.id) : this.props.addFavorite(movie)}
+        favoriteColor={'secondary'}
+        action={() => this.props.removeFavorite(movie.id)}
       />
     ));
   }
 
   render() {
-    return <div>{this.props.movies.length > 0 && this.renderCards()}</div>;
+    const { movies } = this.props;
+    return (
+      <div>{this.props.movies.length > 0 && this.renderCards(movies)}</div>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    movies: state.movies.movies,
-    favorites: state.favorites.movies
+    movies: state.favorites.movies
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     listFavorites: () => dispatch(listFavorites(dispatch)),
-    getPopularMovies: page => dispatch(getPopularMovies(page)),
-    addFavorite: movie => dispatch(addFavorite(movie, dispatch)),
     removeFavorite: id => dispatch(removeFavorite(id, dispatch))
   };
 };
@@ -109,4 +92,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ListMovies);
+)(FavoritesMovies);
