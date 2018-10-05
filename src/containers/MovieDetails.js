@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { getMovieDetails } from '../actions/movies';
 import { connect } from 'react-redux';
+import { getMovieDetails } from '../actions/movies';
+import MovieDetailsCard from '../components/MovieDetailsCard';
 
 class MovieDetails extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class MovieDetails extends Component {
     const { movieDetails } = this.props;
     return (
       <div>
-        <h1>Detalhes do filme</h1>
+        {movieDetails.length > 0 || Object.keys(movieDetails).length > 0 && <MovieDetailsCard movie={movieDetails} />}
       </div>
     );
   }

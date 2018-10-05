@@ -71,7 +71,7 @@ class FavoritesMovies extends Component {
   render() {
     const { movies } = this.props;
     return (
-      <div>{this.props.movies.length > 0 && this.renderCards(movies)}</div>
+      <div>{movies.length > 0 && this.renderCards(movies)}</div>
     );
   }
 }
