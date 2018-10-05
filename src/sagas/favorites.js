@@ -13,12 +13,7 @@ function* addFavorite({ payload }) {
 
 function* removeFavorite({ payload }) {
   try {
-    const response = yield call(removeMovie, payload);
-    console.log('REMOVE FAVORITE', response);
-    // yield put({
-    //   type: types.SET_MOVIE_DETAILS,
-    //   payload: response.data
-    // });
+    yield call(removeMovie, payload);
   } catch (error) {
     yield put({ type: types.SET_ERROR, payload: error.message });
   }

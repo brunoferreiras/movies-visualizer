@@ -133,7 +133,7 @@ class MovieCard extends Component {
                     color="secondary"
                     aria-label="Add"
                     className={classes.favoriteButton}
-                    onClick={() => this.props.addFavorite()}
+                    onClick={() => this.props.action()}
                   >
                     <FavoriteIcon />
                   </Button>
@@ -156,7 +156,8 @@ MovieCard.propTypes = {
   description: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   image: PropTypes.string,
-  releaseDate: PropTypes.string.isRequired
+  releaseDate: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(MovieCard);

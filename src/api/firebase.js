@@ -3,12 +3,12 @@ import * as types from '../actions/types';
 import { API_KEY } from '../utilities/constants';
 
 var config = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: ""
+  apiKey: "AIzaSyBA5rC6MUqEPcrBlJbWdvaQeiym3LVuoTg",
+  authDomain: "movies-visualizer.firebaseapp.com",
+  databaseURL: "https://movies-visualizer.firebaseio.com",
+  projectId: "movies-visualizer",
+  storageBucket: "movies-visualizer.appspot.com",
+  messagingSenderId: "958264710831"
 };
 
 const Firebase = firebase.initializeApp(config);
@@ -32,17 +32,20 @@ export const getAllFavorites = dispatch => {
   movies.on('value', snapshot => {
     dispatch({
       type: types.SET_FAVORITES,
-      payload: snapshot.val()
+      payload: snapshot.val() === null ? [] : Object.values(snapshot.val())
     });
   });
 };
 
-export const removeMovie = id => {
+export const removeMovie = ({ id, dispatch}) => {
   if (id != null) {
     return database
       .ref('/' + API_KEY)
       .child(id)
-      .set(null, () => console.log('Remove Movie'));
+      .set(null, () => dispatch({
+        type: types.SET_SUCCESS,
+        payload: 'O filme foi removido dos favoritos!'
+      }));
   }
   return false;
 };

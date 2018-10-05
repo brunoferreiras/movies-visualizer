@@ -78,8 +78,7 @@ class ListMovies extends Component {
         rating={movie.vote_average}
         image={movie.backdrop_path}
         releaseDate={movie.release_date}
-        addFavorite={() => this.props.addFavorite(movie)}
-        removeFavorite={() => this.props.removeFavorite(movie.id)}
+        action={() => this.props.addFavorite(movie)}
       />
     ));
   }

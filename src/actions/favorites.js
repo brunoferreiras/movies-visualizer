@@ -10,10 +10,13 @@ export const addFavorite = (movie, dispatch) => {
   };
 };
 
-export const removeFavorite = movie => {
+export const removeFavorite = (id, dispatch) => {
   return {
     type: types.REMOVE_FAVORITE,
-    payload: movie
+    payload: {
+      id,
+      dispatch
+    }
   };
 };
 

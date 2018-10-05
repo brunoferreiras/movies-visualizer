@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeFavorite, listFavorites } from '../actions/favorites';
+import { listFavorites, removeFavorite } from '../actions/favorites';
 import MovieCard from '../components/MovieCard';
 
 class FavoritesMovies extends Component {
@@ -49,7 +49,6 @@ class FavoritesMovies extends Component {
   }
 
   renderCards(movies) {
-    movies = Object.values(movies);
     movies = this.getParcialMovies(movies);
 
     return movies.map((movie, i) => (
@@ -63,14 +62,16 @@ class FavoritesMovies extends Component {
         rating={movie.vote_average}
         image={movie.backdrop_path}
         releaseDate={movie.release_date}
-        removeFavorite={() => this.props.removeFavorite(movie.id)}
+        action={() => this.props.removeFavorite(movie.id)}
       />
     ));
   }
 
   render() {
     const { movies } = this.props;
-    return <div>{Object.keys(movies).length !== 0 && movies.constructor === Object && this.renderCards(movies)}</div>;
+    return (
+      <div>{this.props.movies.length > 0 && this.renderCards(movies)}</div>
+    );
   }
 }
 
@@ -83,7 +84,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     listFavorites: () => dispatch(listFavorites(dispatch)),
-    removeFavorite: id => dispatch(removeFavorite(id))
+    removeFavorite: id => dispatch(removeFavorite(id, dispatch))
   };
 };
 
