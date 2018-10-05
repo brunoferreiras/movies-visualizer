@@ -2,7 +2,7 @@
 
 É uma pequena aplicação que se comunica com a API do [TheMovieDB](https://www.themoviedb.org/documentation/api).
 
-### [DEMO](movies-visualizer.firebaseapp.com)
+### [DEMO](https://movies-visualizer.firebaseapp.com)
 
 ## Funcionamento
 
