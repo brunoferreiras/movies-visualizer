@@ -5,14 +5,8 @@ import { API_KEY } from '../utilities/constants';
 
 function* addFavorite({ payload }) {
   try {
-    console.log('SAGA ADD FAVORITE', payload);
-    const response = yield call(saveMovie, payload);
-    // yield put({
-    //   type: types.SET_POPULAR_MOVIES,
-    //   payload: response.data.results
-    // });
+    yield call(saveMovie, payload);
   } catch (error) {
-    console.log('saga:', error);
     yield put({ type: types.SET_ERROR, payload: error.message });
   }
 }

@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { API_KEY } from '../utilities/constants';
+import * as types from '../actions/types';
 
 var config = {
   apiKey: "",
@@ -13,25 +14,19 @@ var config = {
 const Firebase = firebase.initializeApp(config);
 const database = Firebase.database();
 
-export const saveMovie = (movie, callback) => {
+export const saveMovie = ({ movie, dispatch }) => {
   const database = Firebase.database();
   return database
     .ref('/' + API_KEY)
     .child(movie.id)
-    .set(movie, () => console.log('Save Movie!'));
+    .set(movie, () => dispatch({ type: types.SET_SUCCESS, payload: movie.title + ' foi adicionado como favorito.'}));
 };
 
 export const getAllFavorites = () => {
-  return new Promise(resolve => {
-  const database = Firebase.database();
     const movies = database.ref(`/${API_KEY}`);
-    resolve(movies.on(
-      'value',
-      snapshot => {
+  movies.on('value', snapshot => {
     console.log('read: ', snapshot.val());
     return snapshot.val();
-      })
-    );
   });
 };
 

@@ -98,7 +98,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getPopularMovies: page => dispatch(getPopularMovies(page)),
-    addFavorite: movie => dispatch(addFavorite(movie)),
+    addFavorite: movie => dispatch(addFavorite(movie, dispatch)),
     removeFavorite: id => dispatch(removeFavorite(id))
   };
 };

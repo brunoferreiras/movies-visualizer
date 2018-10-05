@@ -1,9 +1,12 @@
 import * as types from './types';
 
-export const addFavorite = movie => {
+export const addFavorite = (movie, dispatch) => {
   return {
     type: types.ADD_FAVORITE,
-    payload: movie
+    payload: {
+      movie,
+      dispatch
+    }
   };
 };
 

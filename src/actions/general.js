@@ -6,3 +6,11 @@ export const setError = (error = null) => {
     payload: error
   };
 };
+
+
+export const setSuccess = (message = null) => {
+  return {
+    type: types.SET_SUCCESS,
+    payload: message
+  };
+};
