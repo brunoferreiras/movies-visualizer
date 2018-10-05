@@ -17,9 +17,9 @@ export const removeFavorite = movie => {
   };
 };
 
-export const listFavorites = () => {
+export const listFavorites = dispatch => {
   return {
     type: types.LIST_FAVORITES,
-    payload: ''
+    payload: dispatch
   };
 };

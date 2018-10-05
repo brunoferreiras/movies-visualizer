@@ -24,35 +24,9 @@ function* removeFavorite({ payload }) {
   }
 }
 
-function* listFavorites() {
+function* listFavorites({ payload }) {
   try {
-    var moviesRef = Firebase.database().ref(`${API_KEY}`)
-    var movies = yield call(function() {
-      return new Promise(function(resolve, reject) {
-        moviesRef.once('value', function (snap) {
-          var movies = []
-          var movieskeys = snap.val()
-          for (var movieskey in movieskeys) {
-            Firebase.database().ref(`${API_KEY}/${movieskey}`).once('value', function (item) {
-              movies.push(item.val())
-            })
-          }
-          resolve(movies)
-        })
-      })
-    })
-    console.log(movies)
-    // yield put({type: 'LOAD_ROOMS', payload: { rooms: rooms}})
-
-    // const snapshot = yield call(getAllFavorites);
-    // console.log('snapshot', snapshot);
-    // if (snapshot.val() === true) {
-    //   console.log('LIST FAVORITES', snapshot.val());
-    // }
-    // yield put({
-    //   type: types.SET_SEARCH_MOVIES,
-    //   payload: response.data.results
-    // });
+    yield call(getAllFavorites, payload);
   } catch (error) {
     yield put({ type: types.SET_ERROR, payload: error.message });
   }

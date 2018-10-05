@@ -48,9 +48,8 @@ class FavoritesMovies extends Component {
     }
   }
 
-  renderCards() {
-    let { movies } = this.props;
-    console.log('Favorite movies: ', movies);
+  renderCards(movies) {
+    movies = Object.values(movies);
     movies = this.getParcialMovies(movies);
 
     return movies.map((movie, i) => (
@@ -70,7 +69,8 @@ class FavoritesMovies extends Component {
   }
 
   render() {
-    return <div>{this.props.movies.length > 0 && this.renderCards()}</div>;
+    const { movies } = this.props;
+    return <div>{Object.keys(movies).length !== 0 && movies.constructor === Object && this.renderCards(movies)}</div>;
   }
 }
 
@@ -82,7 +82,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    listFavorites: () => dispatch(listFavorites()),
+    listFavorites: () => dispatch(listFavorites(dispatch)),
     removeFavorite: id => dispatch(removeFavorite(id))
   };
 };

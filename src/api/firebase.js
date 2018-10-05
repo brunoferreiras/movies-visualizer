@@ -1,6 +1,6 @@
 import firebase from 'firebase';
-import { API_KEY } from '../utilities/constants';
 import * as types from '../actions/types';
+import { API_KEY } from '../utilities/constants';
 
 var config = {
   apiKey: "",
@@ -19,14 +19,21 @@ export const saveMovie = ({ movie, dispatch }) => {
   return database
     .ref('/' + API_KEY)
     .child(movie.id)
-    .set(movie, () => dispatch({ type: types.SET_SUCCESS, payload: movie.title + ' foi adicionado como favorito.'}));
+    .set(movie, () =>
+      dispatch({
+        type: types.SET_SUCCESS,
+        payload: movie.title + ' foi adicionado como favorito.'
+      })
+    );
 };
 
-export const getAllFavorites = () => {
+export const getAllFavorites = dispatch => {
     const movies = database.ref(`/${API_KEY}`);
   movies.on('value', snapshot => {
-    console.log('read: ', snapshot.val());
-    return snapshot.val();
+    dispatch({
+      type: types.SET_FAVORITES,
+      payload: snapshot.val()
+    });
   });
 };
 
